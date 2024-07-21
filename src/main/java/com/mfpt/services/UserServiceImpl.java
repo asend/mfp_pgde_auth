@@ -37,6 +37,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public User create(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        //user.getRoles().add(findOrCreateRole("USER"));
+        user.setRoles(List.of(findOrCreateRole("USER")));
         userRepository.save(user);
         String code = this.generateCode();
         VerificationToken token = new VerificationToken(code, user);
@@ -96,5 +98,16 @@ public class UserServiceImpl implements UserService {
         user.setEnabled(true);
         userRepository.save(user);
         return user;
+    }
+    private Role findOrCreateRole(String roleName) {
+        Role role = roleRepository.findByNom(roleName);
+        if (role == null) {
+            return roleRepository.save(
+                    Role.builder()
+                            .nom(roleName)
+                            .build()
+            );
+        }
+        return role;
     }
 }
