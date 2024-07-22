@@ -18,8 +18,8 @@ import java.util.Collections;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-   // @Autowired
-   // AuthenticationManager authMgr;
+    /*@Autowired
+    AuthenticationManager authMgr;*/
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -43,7 +43,7 @@ public class SecurityConfig {
                         .requestMatchers("/all").hasAnyAuthority("ADMIN")
                         .anyRequest().authenticated()
                 )
-              //  .addFilterBefore(new JWTAuthenticationFilter(authMgr), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }

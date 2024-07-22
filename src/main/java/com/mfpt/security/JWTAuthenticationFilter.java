@@ -27,13 +27,13 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     UserService userService;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    AuthenticationManager authenticationManager;
 
-    private AuthenticationManager authenticationManager;
-
-    public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
+    /*public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
         super();
         this.authenticationManager = authenticationManager;
-    }
+    }*/
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
